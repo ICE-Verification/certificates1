@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كلية ريادة الأعمال الدولية | International College of Entrepreneurship (I.C.E.)</title>
+    
+    <!-- استدعاء مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --primary-gold: #b8860b;
+            --light-bg: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #475569;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body { background-color: var(--light-bg); color: var(--text-dark); line-height: 1.8; overflow-x: hidden; }
+
+        /* تنسيق الترويسة (Hero Section) */
+        .hero {
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            padding: 50px 20px 40px;
+            text-align: center;
+            border-bottom: 5px solid var(--primary-gold);
+        }
+        .hero img { width: 150px; margin-bottom: 20px; transition: transform 0.3s; }
+        .hero img:hover { transform: scale(1.05); }
+        .hero h1 { color: var(--primary-blue); font-size: 28px; margin-bottom: 10px; }
+        .hero h2 { color: var(--text-muted); font-size: 18px; font-weight: normal; margin-bottom: 15px; }
+        .hero .slogan { font-size: 20px; color: var(--primary-gold); font-weight: bold; max-width: 800px; margin: 0 auto 30px; }
+
+        /* أزرار التحقق الرئيسية */
+        .main-actions {
+            display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; max-width: 900px; margin: 0 auto;
+        }
+        .btn-action {
+            flex: 1; min-width: 280px; padding: 16px 20px; border-radius: 12px; text-decoration: none;
+            color: white; font-weight: bold; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
+        .btn-blue { background-color: var(--primary-blue); }
+        .btn-gold { background-color: var(--primary-gold); }
+
+        /* حاوية الأقسام */
+        .section-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .section-title { color: var(--primary-blue); font-size: 24px; border-bottom: 3px solid var(--primary-gold); padding-bottom: 10px; margin-bottom: 25px; display: inline-block; }
+
+        /* قسم من نحن والأساس المؤسسي */
+        .intro-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .intro-text { font-size: 16px; text-align: justify; }
+        .legal-box {
+            background-color: var(--primary-blue); color: white; padding: 30px; border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(30,58,138,0.15);
+        }
+        .legal-box h3 { color: var(--primary-gold); margin-bottom: 20px; font-size: 18px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px;}
+        .legal-box p { font-size: 14px; margin-bottom: 12px; line-height: 1.6; }
+        .legal-box strong { color: #cbd5e1; }
+
+        /* التدرجات اللونية للأيقونات الطافية */
+        .bg-gradient-1 { background: linear-gradient(135deg, #3b82f6, #1e3a8a); }
+        .bg-gradient-2 { background: linear-gradient(135deg, #10b981, #047857); }
+        .bg-gradient-3 { background: linear-gradient(135deg, #f59e0b, #b8860b); }
+        .bg-gradient-4 { background: linear-gradient(135deg, #8b5cf6, #5b21b6); }
+        .bg-gradient-5 { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+        .bg-gradient-6 { background: linear-gradient(135deg, #06b6d4, #0369a1); }
+
+        /* شبكة منظومة العمل */
+        .system-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px;}
+        
+        .icon-3d-wrapper {
+            width: 65px; height: 65px; border-radius: 18px;
+            display: flex; justify-content: center; align-items: center;
+            color: white; margin-bottom: 20px; margin-top: -45px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            border: 2px solid rgba(255,255,255,0.5);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .card:hover .icon-3d-wrapper { transform: translateY(-8px) scale(1.05) rotate(5deg); }
+        .icon-3d-wrapper i { font-size: 28px; margin: 0; color: white;}
+
+        .card {
+            background: white; padding: 25px 25px 20px; border-radius: 16px; 
+            margin-top: 30px; border: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.04); transition: all 0.3s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .card h3 { font-size: 18px; color: var(--primary-blue); margin-bottom: 10px; }
+        .card p { font-size: 14px; color: var(--text-muted); text-align: justify; }
+
+        /* قوائم البناء والتميز */
+        .lists-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 50px; }
+        
+        .check-list { list-style: none; }
+        .check-list li { 
+            background: white; margin-bottom: 12px; font-size: 15px; display: flex; align-items: center; gap: 15px;
+            padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .check-list li:hover { transform: translateX(-8px); box-shadow: 0 8px 15px rgba(0,0,0,0.08); }
+        
+        .check-icon-wrapper {
+            background: linear-gradient(135deg, var(--primary-gold), #d4af37);
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; justify-content: center; align-items: center; flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(184,134,11,0.3);
+        }
+        .check-icon-wrapper i { color: white; font-size: 14px; margin: 0; }
+
+        .tags-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { 
+            background: white; color: var(--primary-blue); padding: 10px 18px; border-radius: 30px; 
+            font-size: 14px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0; transition: all 0.3s; cursor: default;
+        }
+        .tag:hover { background: var(--primary-blue); color: white; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(30,58,138,0.2); }
+
+        /* الرؤية والرسالة */
+        .vision-mission { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 70px; margin-bottom: 20px;}
+        
+        .vm-box {
+            background: white; padding: 50px 30px 30px; border-radius: 20px; text-align: center;
+            border: none; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+        .vm-box:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(0,0,0,0.12); }
+        
+        .vm-icon-wrapper {
+            width: 85px; height: 85px; border-radius: 25px;
+            display: flex; justify-content: center; align-items: center;
+            position: absolute; top: -42px; right: 50%; transform: translateX(50%);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+            border: 4px solid white;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .vm-box:hover .vm-icon-wrapper { transform: translateX(50%) translateY(-10px) rotate(-5deg); }
+        .vm-icon-wrapper i { font-size: 38px; color: white; }
+        
+        .vm-box h3 { font-size: 22px; color: var(--primary-blue); margin-bottom: 15px; }
+        .vm-box p { font-size: 16px; font-style: italic; color: var(--text-muted); line-height: 1.8;}
+
+        /* الفوتر وأزرار التواصل */
+        footer {
+            background-color: var(--primary-blue); color: white; text-align: center; padding: 45px 20px;
+            margin-top: 50px; border-top: 5px solid var(--primary-gold);
+        }
+        .contact-buttons {
+            display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 25px;
+        }
+        .contact-btn {
+            display: inline-flex; align-items: center; gap: 10px; color: white;
+            padding: 12px 26px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 15px;
+            transition: transform 0.3s, background-color 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .contact-btn:hover { transform: translateY(-3px); }
+        .whatsapp-btn { background-color: #25D366; }
+        .whatsapp-btn:hover { background-color: #128C7E; }
+        .email-btn { background-color: var(--primary-gold); }
+        .email-btn:hover { background-color: #996515; }
+
+        /* التجاوب مع شاشات الموبايل */
+        @media (max-width: 768px) {
+            .intro-grid, .lists-grid, .vision-mission { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 24px; }
+            .hero .slogan { font-size: 16px; }
+            .btn-action { min-width: 100%; }
+            .vision-mission { margin-top: 50px; gap: 60px;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الترويسة العلوية وأزرار التحقق -->
+    <header class="hero">
+        <img src="logo.png" alt="شعار كلية ريادة الأعمال الدولية">
+        <h1>كلية ريادة الأعمال الدولية في إسطنبول</h1>
+        <h2 dir="ltr">International College of Entrepreneurship – I.C.E.</h2>
+        <div class="slogan">"حيث تتحول المعرفة إلى قيمة، والخبرة إلى أثر، والطموح إلى مؤسسات تقود المستقبل"</div>
+        
+        <!-- أزرار التحقق الرئيسية -->
+        <div class="main-actions">
+            <a href="verify.html?tab=cert" class="btn-action btn-blue">
+                <i class="fas fa-graduation-cap"></i> بوابة التحقق من الشهادات
+            </a>
+            <a href="verify.html?tab=partner" class="btn-action btn-gold">
+                <i class="fas fa-id-badge"></i> بوابة التحقق من الاعتمادات
+            </a>
+        </div>
+    </header>
+
+    <div class="section-container">
+        
+        <!-- قسم من نحن والأساس المؤسسي -->
+        <div class="intro-grid">
+            <div class="intro-text">
+                <h2 class="section-title">من نحن؟</h2>
+                <p>كلية ريادة الأعمال الدولية في إسطنبول هي مؤسسة متخصصة في التعليم والتدريب والاستشارات وتطوير الأعمال، تتخذ من إسطنبول مركزاً رئيسياً لنشاطها، وتعمل ضمن منظومة متكاملة تجمع بين التعليم والتدريب المهني والتخصصي، والاستشارات، والشراكات مع المؤسسات التعليمية، والتعليم الرقمي.</p>
+                <p style="margin-top: 15px;">ولا تقوم فلسفة الكلية على تقديم البرامج التدريبية بوصفها غاية في ذاتها، وإنما على توظيف المعرفة والخبرة لبناء الكفاءات، والقدرات المؤسسية، والحلول العملية. ففي بيئة اقتصادية تتغير فيها الأسواق المتسارعة، لم يعد التميز المهني مرتبطاً بالحصول على المعرفة وحدها.</p>
+                <p style="margin-top: 15px;">نحن لا نتعامل مع التعليم باعتباره نقلاً للمعلومات، بل ننظر إلى المعرفة باعتبارها مورداً يجب أن يتحول إلى قدرة، والقدرة إلى أداء، والأداء إلى قيمة وأثر.</p>
+            </div>
+            
+            <div class="legal-box">
+                <h3>الأساس المؤسسي النظامي</h3>
+                <p><strong>الكيان المسجل:</strong><br><span dir="ltr" style="display:inline-block;">ENTREPRENEURSHIP COLLEGE INT EĞİTİM HİZMETLERİ LİMİTED ŞİRKETİ</span></p>
+                <p><strong>رقم الترخيص:</strong> 368979-5</p>
+                <p><strong>رقم MERSİS:</strong><br>0336-1189-1980-0001</p>
+                <p><strong>تاريخ بدء النشاط:</strong> 17/03/2022</p>
+                <p><strong>المجموعة المهنية:</strong> 15 – التعليم</p>
+                <p><strong>رمز NACE:</strong> 85.60.02 (الأنشطة الداعمة للتعليم)</p>
+            </div>
+        </div>
+
+        <!-- منظومة عمل الكلية -->
+        <h2 class="section-title" style="margin-top: 20px;">منظومة عمل الكلية</h2>
+        <div class="system-grid">
+            <div class="card">
+                <div class="icon-3d-wrapper bg-gradient-1"><i class="fas fa-chalkboard-teacher"></i></div>
+                <h3>التعليم والتدريب</h3>
+                <p>تقديم البرامج التعليمية والمهنية لإكساب المهارات. نسعى للجمع بين الأساس العلمي والتطبيق العملي في مجالات الإدارة، القيادة، التسويق، والذكاء الاصطناعي.</p>
+            </div>
+            <div class="card">
+                <div class="icon-3d-wrapper bg-gradient-2"><i class="fas fa-comments"></i></div>
+                <h3>الاستشارات التعليمية</h3>
+                <p>تقديم خدمات الإرشاد والتوجيه، بما في ذلك الاستشارات المتعلقة بالتعليم الدولي للطلاب، ودعم المستفيدين في تقييم المسارات والفرص التعليمية المتاحة.</p>
+            </div>
+            <div class="card">
+                <div class="icon-3d-wrapper bg-gradient-3"><i class="fas fa-handshake"></i></div>
+                <h3>الشراكات والتعاون الدولي</h3>
+                <p>إبرام الاتفاقيات مع المؤسسات التعليمية محلياً ودولياً، وتنظيم برامج التبادل الطلابي، لربط الكفاءات ببيئات وخبرات متعددة عبر الحدود.</p>
+            </div>
+            <div class="card">
+                <div class="icon-3d-wrapper bg-gradient-4"><i class="fas fa-chart-line"></i></div>
+                <h3>ريادة وتطوير الأعمال</h3>
+                <p>منظومة تتجاوز تأسيس المشاريع إلى فهم السوق، بناء نموذج العمل، التوسط في الروابط التجارية، وتحويل المعرفة إلى قيمة اقتصادية مؤسسية.</p>
+            </div>
+            <div class="card">
+                <div class="icon-3d-wrapper bg-gradient-5"><i class="fas fa-search"></i></div>
+                <h3>البحث والاستشارات</h3>
+                <p>أداة لفهم الأسواق وتحليل المشاريع لصناعة القرار. تتكامل الوظيفة التعليمية مع البحثية لتطوير حلول مبنية على التحليل الدقيق.</p>
+            </div>
+            <div class="card">
+                <div class="icon-3d-wrapper bg-gradient-6"><i class="fas fa-laptop-code"></i></div>
+                <h3>التعليم الرقمي</h3>
+                <p>التعليم الرقمي ليس بديلاً للحضور، بل نموذج تعليمي ومهني قادر على تقديم المعرفة والخدمات الاستشارية للمستفيدين عبر بيئات تتجاوز الحدود الجغرافية.</p>
+            </div>
+        </div>
+
+        <!-- ماذا نبني ومجالات التميز -->
+        <div class="lists-grid">
+            <div>
+                <h2 class="section-title">ماذا نبني؟</h2>
+                <ul class="check-list">
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تطوير القيادات والكفاءات التنفيذية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> صناعة رواد الأعمال وتطوير قدراتهم.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> رفع الكفاءة المهنية والمؤسسية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تطوير المؤسسات والأنظمة الإدارية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> بناء القدرات التنظيمية والتشغيلية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تصميم الحلول الاستراتيجية والتطويرية.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> تحويل المعرفة إلى ممارسات قابلة للتطبيق.</li>
+                    <li><div class="check-icon-wrapper"><i class="fas fa-check"></i></div> ربط التعليم باحتياجات سوق العمل.</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="section-title">مجالات التميز المهني</h2>
+                <div class="tags-container">
+                    <span class="tag">ريادة الأعمال</span>
+                    <span class="tag">تطوير المشاريع</span>
+                    <span class="tag">الإدارة والقيادة</span>
+                    <span class="tag">التسويق والمبيعات</span>
+                    <span class="tag">الذكاء الاصطناعي في الأعمال</span>
+                    <span class="tag">العلوم السلوكية والنفسية</span>
+                    <span class="tag">الموارد البشرية</span>
+                    <span class="tag">الابتكار والتحول المؤسسي</span>
+                    <span class="tag">التطوير المهني</span>
+                    <span class="tag">التعليم الرقمي</span>
+                </div>
+                
+                <h2 class="section-title" style="margin-top: 35px;">البعد الدولي</h2>
+                <p style="font-size: 15px; text-align: justify; color: var(--text-muted);">كلمة «الدولية» ليست مجرد عنصر تسويقي، بل تعكس انفتاحاً مؤسسياً، تبادلاً للمعرفة، وتعاوناً تعليمياً يربط الأفراد والمؤسسات بالفرص العابرة للحدود. من إسطنبول تنطلق شبكتنا المهنية لتتجاوز الحدود الجغرافية.</p>
+            </div>
+        </div>
+
+        <!-- الرؤية والرسالة -->
+        <div class="vision-mission">
+            <div class="vm-box">
+                <div class="vm-icon-wrapper bg-gradient-3"><i class="fas fa-binoculars"></i></div>
+                <h3>رؤيتنا</h3>
+                <p>"أن تكون كلية ريادة الأعمال الدولية مؤسسة مرجعية في التعليم والتدريب والاستشارات وتطوير ريادة الأعمال، وشريكاً معرفياً للمؤسسات والأفراد لتحقيق النمو والابتكار والاستدامة."</p>
+            </div>
+            <div class="vm-box">
+                <div class="vm-icon-wrapper bg-gradient-1"><i class="fas fa-rocket"></i></div>
+                <h3>رسالتنا</h3>
+                <p>"تمكين الأفراد والمؤسسات من بناء المعرفة والقدرات اللازمة للتميز، من خلال منظومة متكاملة تركز على التطبيق والقيمة والأثر وفق منهجيات علمية ومهنية."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- التذييل وطرق التواصل -->
+    <footer>
+        <h2 dir="ltr" style="margin-bottom: 15px; font-size: 20px;">International College of Entrepreneurship – I.C.E.</h2>
+        <p style="max-width: 600px; margin: 0 auto 20px; font-size: 14px; opacity: 0.9;">
+            منظومة تعليم وتدريب واستشارات وتطوير أعمال، تنطلق من إسطنبول لتربط المعرفة بالتطبيق، والطموح ببناء مؤسسات أكثر قدرة على النمو.
+        </p>
+        <div class="contact-buttons">
+            <a href="https://wa.me/908502425710" target="_blank" class="contact-btn whatsapp-btn">
+                <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+            </a>
+            <a href="mailto:info@i-college-e.tr" class="contact-btn email-btn">
+                <i class="fas fa-envelope"></i> info@i-college-e.tr
+            </a>
+        </div>
+    </footer>
+
+</body>
+</html>
