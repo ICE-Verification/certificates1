@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة التحقق الإلكتروني | International College of Entrepreneurship</title>
+    
+    <!-- استدعاء المكتبات -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --primary-gold: #b8860b;
+            --bg-gradient-1: #f8fafc;
+            --bg-gradient-2: #e2e8f0;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body { 
+            background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%); 
+            display: flex; flex-direction: column; align-items: center; 
+            min-height: 100vh; padding: 30px 15px;
+        }
+
+        .main-container { 
+            background: white; padding: 40px 30px; border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            width: 100%; max-width: 650px; 
+            border-top: 6px solid var(--primary-blue);
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .logo { width: 130px; margin-bottom: 15px; }
+        .college-title { font-size: 22px; color: var(--primary-blue); font-weight: bold; margin-bottom: 5px; }
+        .portal-subtitle { font-size: 15px; color: var(--text-gray); margin-bottom: 15px; }
+
+        .back-home-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            background: #f1f5f9; color: var(--primary-blue); padding: 8px 18px; border-radius: 20px;
+            text-decoration: none; font-weight: bold; font-size: 13px; border: 1px solid #cbd5e1;
+            transition: all 0.2s ease;
+        }
+        .back-home-btn:hover { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
+
+        .tabs-container {
+            display: flex; background: #f1f5f9; border-radius: 12px; padding: 5px; margin-bottom: 30px;
+        }
+        .tab-btn {
+            flex: 1; padding: 14px 10px; border: none; background: transparent; 
+            border-radius: 8px; font-size: 15px; font-weight: bold; color: var(--text-gray);
+            cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
+        .tab-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .tab-btn:not(.active):hover { color: var(--text-dark); }
+
+        .search-section { display: none; animation: slideDown 0.4s ease-out forwards; }
+        .search-section.active { display: block; }
+        
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .input-group { margin-bottom: 20px; }
+        .input-label { display: block; margin-bottom: 10px; font-size: 14px; color: var(--text-dark); font-weight: bold; text-align: right;}
+        
+        input { 
+            width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; 
+            font-size: 16px; text-align: center; transition: all 0.3s; background: #f8fafc;
+        }
+        input:focus { border-color: var(--primary-blue); outline: none; background: white; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
+        
+        button.verify-submit-btn { 
+            background-color: var(--primary-blue); color: white; border: none; padding: 15px; 
+            border-radius: 10px; cursor: pointer; font-size: 16px; width: 100%; font-weight: bold; 
+            transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        button.verify-submit-btn:hover { background-color: #152b69; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(30,58,138,0.2); }
+        button.verify-submit-btn.gold { background-color: var(--primary-gold); }
+        button.verify-submit-btn.gold:hover { background-color: #996515; box-shadow: 0 5px 15px rgba(184,134,11,0.2); }
+
+        #result-box { margin-top: 30px; display: none; padding: 25px; border-radius: 12px; border: 1px solid transparent; width: 100%; }
+        
+        .result-item { margin-bottom: 12px; font-size: 15px; display: flex; align-items: flex-start; }
+        .result-item strong { margin-left: 10px; flex-shrink: 0; min-width: 120px; color: #1e293b;}
+        .result-item span { color: #475569; }
+
+        .status-badge { padding: 5px 12px; border-radius: 6px; font-weight: bold; font-size: 14px; display: inline-block; }
+        .status-active { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .status-expired { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+        .pdf-btn {
+            display: inline-flex; align-items: center; justify-content: center; background-color: #059669; color: white;
+            padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 20px;
+            transition: all 0.3s; font-size: 15px; width: 100%;
+        }
+        .pdf-btn:hover { background-color: #047857; }
+
+        .footer-section { margin-top: 30px; text-align: center; }
+        .social-icons { display: flex; justify-content: center; gap: 15px; }
+        .social-icon { 
+            display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; 
+            border-radius: 50%; color: white; text-decoration: none; font-size: 18px; transition: transform 0.3s; 
+        }
+        .social-icon:hover { transform: translateY(-3px); }
+        .facebook-btn { background-color: #1877F2; }
+        .whatsapp-btn { background-color: #25D366; }
+        .email-btn { background-color: var(--primary-gold); }
+        
+        @media (max-width: 480px) {
+            .main-container { padding: 30px 20px; }
+            .college-title { font-size: 19px; }
+            .tab-btn { font-size: 13px; padding: 12px 5px; }
+            .result-item { flex-direction: column; }
+            .result-item strong { margin-bottom: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    
+    <!-- الترويسة -->
+    <div class="header-section">
+        <img src="logo.png" alt="شعار الكلية" class="logo">
+        <h1 class="college-title">كلية ريادة الأعمال الدولية</h1>
+        <p class="portal-subtitle">البوابة الإلكترونية الموحدة للتحقق من الوثائق</p>
+        <a href="index.html" class="back-home-btn">
+            <i class="fas fa-home"></i> العودة للرئيسية (عن الكلية)
+        </a>
+    </div>
+
+    <!-- التبويبات لاختيار نوع التحقق -->
+    <div class="tabs-container">
+        <button id="btn-cert-tab" class="tab-btn active" onclick="switchTab('cert-tab', this)">
+            <i class="fas fa-graduation-cap"></i> الشهادات التدريبية
+        </button>
+        <button id="btn-partner-tab" class="tab-btn" onclick="switchTab('partner-tab', this)">
+            <i class="fas fa-id-badge"></i> الاعتمادات والشراكات
+        </button>
+    </div>
+
+    <!-- قسم التحقق من الشهادات -->
+    <div id="cert-tab" class="search-section active">
+        <div class="input-group">
+            <label class="input-label">الرقم المرجعي للشهادة:</label>
+            <input type="text" id="certInput" placeholder="مثال: ICE-PTAD-26-042" onkeypress="handleEnter(event, 'cert')">
+        </div>
+        <button class="verify-submit-btn" onclick="verifyCertificate()">
+            <i class="fas fa-search"></i> تحقق من الشهادة الآن
+        </button>
+    </div>
+
+    <!-- قسم التحقق من الاعتمادات -->
+    <div id="partner-tab" class="search-section">
+        <div class="input-group">
+            <label class="input-label">اسم المدرب أو الشريك:</label>
+            <input type="text" id="partnerInput" placeholder="أدخل الاسم بالعربية أو الإنجليزية" onkeypress="handleEnter(event, 'partner')">
+        </div>
+        <button class="verify-submit-btn gold" onclick="verifyPartner()">
+            <i class="fas fa-search"></i> تحقق من الاعتماد الآن
+        </button>
+    </div>
+
+    <!-- صندوق عرض النتائج المشترك -->
+    <div id="result-box"></div>
+
+</div>
+
+<!-- الفوتر -->
+<div class="footer-section">
+    <div class="social-icons">
+        <a href="https://www.facebook.com/ICE.ShujaaAlFahd/" target="_blank" class="social-icon facebook-btn" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://wa.me/908502425710" target="_blank" class="social-icon whatsapp-btn" title="واتساب"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:info@i-college-e.tr" class="social-icon email-btn" title="البريد الإلكتروني"><i class="fas fa-envelope"></i></a>
+    </div>
+</div>
+
+<script>
+    const certCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=196238973&single=true&output=csv';
+    const partnerCsvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQzIWoz1zrtdBwT9rYmvQgGt8rjz2SIK0Z2IOt9MavvrZL548UajhqCmji5eIIHII1VOpI4rWx1pEzP/pub?gid=522399146&single=true&output=csv';
+
+    function switchTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.search-section').forEach(sec => sec.classList.remove('active'));
+        
+        document.getElementById('result-box').style.display = 'none';
+        document.getElementById('certInput').value = '';
+        document.getElementById('partnerInput').value = '';
+
+        btnElement.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+
+    // فتح التبويب المناسب تلقائياً عند القدوم من الصفحة الرئيسية
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get('tab');
+        if (tabParam === 'partner') {
+            switchTab('partner-tab', document.getElementById('btn-partner-tab'));
+        }
+    });
+
+    function handleEnter(event, type) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            if (type === 'cert') verifyCertificate();
+            if (type === 'partner') verifyPartner();
+        }
+    }
+
+    function verifyCertificate() {
+        const inputRef = document.getElementById('certInput').value.trim().toUpperCase();
+        const resultBox = document.getElementById('result-box');
+        
+        if(!inputRef) return alert('الرجاء إدخال الرقم المرجعي للشهادة');
+
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin fa-2x" style="color:#1e3a8a;"></i><p style="margin-top:10px;">جاري استخراج البيانات...</p></div>';
+        resultBox.style.background = '#f1f5f9';
+        resultBox.style.borderColor = '#cbd5e1';
+
+        Papa.parse(certCsvUrl, {
+            download: true, header: true,
+            complete: function(results) {
+                const record = results.data.find(row => row.RefNumber && row.RefNumber.trim().toUpperCase() === inputRef);
+                
+                if(record) {
+                    let html = `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <i class="fas fa-check-circle" style="font-size: 35px; color: #059669;"></i>
+                            <div style="font-weight: bold; color: #059669; margin-top: 8px; font-size: 18px;">وثيقة معتمدة وموثقة</div>
+                        </div>
+                        <div class="result-item"><strong>الاسم الكامل:</strong> <span>${record.StudentName}</span></div>
+                        <div class="result-item"><strong>الدولة:</strong> <span>${record.Country}</span></div>
+                        <div class="result-item"><strong>البرنامج التدريبي:</strong> <span>${record.CourseName}</span></div>
+                        <div class="result-item"><strong>مسمى الشهادة:</strong> <span>${record.CertificateType}</span></div>
+                        <div class="result-item"><strong>صادرة بتوقيع:</strong> <span>${record.Signatory}</span></div>
+                    `;
+                    if (record.CertificateLink && record.CertificateLink.trim() !== '') {
+                        html += `<a href="${record.CertificateLink.trim()}" target="_blank" class="pdf-btn"><i class="fas fa-file-pdf" style="margin-left: 8px;"></i> عرض وتحميل الشهادة الأصلية</a>`;
+                    }
+                    resultBox.innerHTML = html;
+                    resultBox.style.background = '#f0fdf4'; resultBox.style.borderColor = '#bbf7d0';
+                } else {
+                    resultBox.innerHTML = `<div style="text-align: center; color: #dc2626;"><i class="fas fa-times-circle fa-3x" style="margin-bottom: 10px;"></i><p style="font-weight: bold; font-size: 16px;">الرقم المرجعي غير صحيح أو غير مدرج</p></div>`;
+                    resultBox.style.background = '#fef2f2'; resultBox.style.borderColor = '#fecaca';
+                }
+            },
+            error: function() { resultBox.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.</p>'; }
+        });
+    }
+
+    function verifyPartner() {
+        const inputStr = document.getElementById('partnerInput').value.trim().toLowerCase();
+        const resultBox = document.getElementById('result-box');
+        
+        if(!inputStr) return alert('الرجاء إدخال اسم المدرب أو الشريك');
+
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '<div style="text-align:center; padding: 20px;"><i class="fas fa-spinner fa-spin fa-2x" style="color:#b8860b;"></i><p style="margin-top:10px;">جاري استخراج البيانات...</p></div>';
+        resultBox.style.background = '#f1f5f9';
+        resultBox.style.borderColor = '#cbd5e1';
+
+        Papa.parse(partnerCsvUrl, {
+            download: true, header: true,
+            complete: function(results) {
+                const record = results.data.find(row => 
+                    (row.ArabicName && row.ArabicName.toLowerCase().includes(inputStr)) || 
+                    (row.EnglishName && row.EnglishName.toLowerCase().includes(inputStr))
+                );
+
+                if(record) {
+                    let statusBadge = '';
+                    if(record.ExpiryDate) {
+                        const expiryDate = new Date(record.ExpiryDate);
+                        if (expiryDate >= new Date()) statusBadge = `<span class="status-badge status-active">ساري (حتى ${record.ExpiryDate})</span>`;
+                        else statusBadge = `<span class="status-badge status-expired">منتهي (منذ ${record.ExpiryDate})</span>`;
+                    } else { statusBadge = `<span>غير محدد</span>`; }
+
+                    resultBox.innerHTML = `
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <i class="fas fa-certificate" style="font-size: 35px; color: #b8860b;"></i>
+                            <div style="font-weight: bold; color: #b8860b; margin-top: 8px; font-size: 18px;">تم العثور على سجل معتمد</div>
+                        </div>
+                        <div class="result-item"><strong>الاسم (عربي):</strong> <span>${record.ArabicName || '-'}</span></div>
+                        <div class="result-item"><strong>الاسم (إنجليزي):</strong> <span>${record.EnglishName || '-'}</span></div>
+                        <div class="result-item"><strong>الصفة/الاعتماد:</strong> <span>${record.Capacity || '-'}</span></div>
+                        <div class="result-item"><strong>النطاق الجغرافي:</strong> <span>${record.Location || '-'}</span></div>
+                        <div class="result-item" style="align-items: center;"><strong>حالة الاعتماد:</strong> ${statusBadge}</div>
+                    `;
+                    resultBox.style.background = '#fdfaf0'; resultBox.style.borderColor = '#f6e0b5';
+                } else {
+                    resultBox.innerHTML = `<div style="text-align: center; color: #dc2626;"><i class="fas fa-times-circle fa-3x" style="margin-bottom: 10px;"></i><p style="font-weight: bold; font-size: 16px;">لم يتم العثور على سجل يطابق هذا الاسم</p></div>`;
+                    resultBox.style.background = '#fef2f2'; resultBox.style.borderColor = '#fecaca';
+                }
+            },
+            error: function() { resultBox.innerHTML = '<p style="color:red; text-align:center;">حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.</p>'; }
+        });
+    }
+</script>
+
+</body>
+</html>
